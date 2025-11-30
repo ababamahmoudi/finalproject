@@ -1,6 +1,5 @@
-from fastapi import FastAPI, Depends
-from fastapi.middleware.cors import CORSMiddleware
-from sqlalchemy.orm import Session
+from fastapi import FastAPI, Depends from fastapi.middleware.cors import CORSMiddleware from 
+sqlalchemy.orm import Session
 
 from .db import SessionLocal, engine
 from . import models, crud
@@ -75,3 +74,6 @@ def get_product_detail(product_id: int, db: Session = Depends(get_db)):
 
     return product_json
 
+@app.get("/health")
+def health_check():
+    return {"status": "ok"}
