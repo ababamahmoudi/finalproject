@@ -1,0 +1,23 @@
+  order_processor:
+    build: ./functions
+    container_name: cloudmart-order-processor
+    restart: always
+    command: ["python3", "order_processor.py"]
+    networks:
+      - dbnet
+
+  email_notifier:
+    build: ./functions
+    container_name: cloudmart-email-notifier
+    restart: always
+    command: ["python3", "email_notifier.py"]
+    networks:
+      - dbnet
+
+  inventory_worker:
+    build: ./functions
+    container_name: cloudmart-inventory-worker
+    restart: always
+    command: ["python3", "inventory_worker.py"]
+    networks:
+      - dbnet
