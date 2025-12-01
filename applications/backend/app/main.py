@@ -1,5 +1,6 @@
-from fastapi import FastAPI, Depends from fastapi.middleware.cors import CORSMiddleware from 
-sqlalchemy.orm import Session
+from fastapi import FastAPI, Depends
+from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy.orm import Session
 
 from .db import SessionLocal, engine
 from . import models, crud
@@ -8,7 +9,6 @@ from .redis_client import get_cached_json, set_cached_json
 # Create database tables
 models.Base.metadata.create_all(bind=engine)
 
-# Create FastAPI app
 app = FastAPI()
 
 # Database dependency
@@ -19,10 +19,10 @@ def get_db():
     finally:
         db.close()
 
-# CORS (must come after app = FastAPI())
+# CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],           
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -73,7 +73,3 @@ def get_product_detail(product_id: int, db: Session = Depends(get_db)):
     set_cached_json(cache_key, product_json, ttl_seconds=30)
 
     return product_json
-
-@app.get("/health")
-def health_check():
-    return {"status": "ok"}

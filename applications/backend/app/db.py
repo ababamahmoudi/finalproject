@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker, declarative_base
 
 DATABASE_URL = os.getenv(
     "DATABASE_URL",
-    "postgresql+psycopg2://cloudmart:cloudmartpass@db:5432/cloudmart",
+    "postgresql+psycopg2://cloudmart:cloudmartpass@10.2.113.134:5432/cloudmart",
 )
 
 engine = create_engine(DATABASE_URL)
